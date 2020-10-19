@@ -79,22 +79,6 @@ int main(int argc, char **argv)
     }
     
     std::stringstream ss;
-//    switch  (argc){
-//        case 2:
-//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1];
-//            break;
-
-//        case 3:
-//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2];
-//            break;
-
-//        case 4:
-//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2] << " " << argv[3];
-//            break;
-
-//        default:
-//            ss << COPPELIASIM_EXECUTABLE ;
-//    }
 
     switch  (argc){
     case 2:
