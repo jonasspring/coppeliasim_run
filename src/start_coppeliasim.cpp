@@ -62,7 +62,7 @@ PREENABLESYNC allows to preenable the synchronous mode (set to TRUE or FALSE)
 -XXX.brm: loads an XReality model.
 */
 
-#define COPPELIASIM_EXECUTABLE "cd ~/CoppeliaSim && ./coppeliaSim.sh"
+#define COPPELIASIM_EXECUTABLE "cd /media/storage/Ubuntu/CoppeliaSim_Edu_V4_1_0_Ubuntu18_04 && ./coppeliaSim.sh"
 //----------------------------------------------------------------------------//
 
 int main(int argc, char **argv)
@@ -70,23 +70,47 @@ int main(int argc, char **argv)
     // node name: coppeliasim
     ros::init(argc, argv, "coppeliasim");
     ROS_INFO("Starting coppeliasim simulator... ");
+
+    ros::NodeHandle nh;
+    std::string coppeliasim_path;
+
+    if(!nh.getParam("/coppeliasim_path", coppeliasim_path)){
+      ROS_ERROR("/coppeliasim_path parameter not found");
+    }
     
     std::stringstream ss;
+//    switch  (argc){
+//        case 2:
+//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1];
+//            break;
+
+//        case 3:
+//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2];
+//            break;
+
+//        case 4:
+//            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2] << " " << argv[3];
+//            break;
+
+//        default:
+//            ss << COPPELIASIM_EXECUTABLE ;
+//    }
+
     switch  (argc){
-        case 2:
-            ss << COPPELIASIM_EXECUTABLE << " " << argv[1];
-            break;
+    case 2:
+      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1];
+      break;
 
-        case 3:
-            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2];
-            break;
+    case 3:
+      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1] << " " << argv[2];
+      break;
 
-        case 4:
-            ss << COPPELIASIM_EXECUTABLE << " " << argv[1] << " " << argv[2] << " " << argv[3];
-            break;
+    case 4:
+      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1] << " " << argv[2] << " " << argv[3];
+      break;
 
-        default:
-            ss << COPPELIASIM_EXECUTABLE ;
+    default:
+      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh " ;
     }
 
     if (system( ss.str().c_str() )) {}
