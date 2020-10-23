@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     std::string coppeliasim_path;
 
-    if(!nh.getParam("/coppeliasim_path", coppeliasim_path)){
+    if(!nh.getParam("/panda/coppeliasim_path", coppeliasim_path)){
       ROS_ERROR("/coppeliasim_path parameter not found");
     }
     
