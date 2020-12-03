@@ -76,24 +76,40 @@ int main(int argc, char **argv)
     if(!nh.getParam("/panda/coppeliasim_path", coppeliasim_path)){
       ROS_ERROR("/coppeliasim_path parameter not found");
     }
+
+    bool use_docker;
+    if(!nh.getParam("/start_coppeliasim/use_docker", use_docker)){
+      use_docker = false;
+    }
+
+    std::string xvfb_run;
+    if(use_docker){
+      ROS_INFO("Launch CoppeliaSim with xvfb-run!");
+      xvfb_run = "/usr/bin/xvfb-run --server-args \"-ac -screen 0, 1024x1024x24\" ";
+    }
+    else
+    {
+      xvfb_run = "";
+    }
+    
     
     std::stringstream ss;
 
     switch  (argc){
     case 2:
-      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1];
+      ss << "cd " << coppeliasim_path << " && " << xvfb_run << "./coppeliaSim.sh "  << argv[1];
       break;
 
     case 3:
-      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1] << " " << argv[2];
+      ss << "cd " << coppeliasim_path << " && " << xvfb_run << "./coppeliaSim.sh "  << argv[1] << " " << argv[2];
       break;
 
     case 4:
-      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh "  << argv[1] << " " << argv[2] << " " << argv[3];
+      ss << "cd " << coppeliasim_path << " && " << xvfb_run << "./coppeliaSim.sh "  << argv[1] << " " << argv[2] << " " << argv[3];
       break;
 
     default:
-      ss << "cd " << coppeliasim_path << " && ./coppeliaSim.sh " ;
+      ss << "cd " << coppeliasim_path << " && " << xvfb_run << "./coppeliaSim.sh " ;
     }
 
     if (system( ss.str().c_str() )) {}
